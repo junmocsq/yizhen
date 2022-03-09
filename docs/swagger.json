@@ -1,0 +1,178 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "yizhen",
+        "title": "gua",
+        "contact": {
+            "name": "junmo",
+            "url": "http://www.github.com/junmocsq",
+            "email": "junmocsq@163.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://github.com/junmocsq/gua/blob/master/LICENSE"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/v1/tieba/tiebaById": {
+            "get": {
+                "description": "do ping",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tieba"
+                ],
+                "summary": "贴吧信息",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "贴吧ID",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/tieba.Tieba"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/tieba/tiebaByName": {
+            "get": {
+                "description": "do ping",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tieba"
+                ],
+                "summary": "贴吧信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "default": "\"赵小凡\"",
+                        "description": "贴吧名称",
+                        "name": "name",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/tieba.Tieba"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/tieba/tiebaList": {
+            "get": {
+                "description": "获取贴吧列表",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tieba"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "分页",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "每页条数",
+                        "name": "size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/tieba.Tieba"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "failed!!",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "tieba.Tieba": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "integer"
+                },
+                "deleted_at": {
+                    "type": "integer"
+                },
+                "desc": {
+                    "type": "string"
+                },
+                "follower": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "img": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "popu": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "uid": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}

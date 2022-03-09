@@ -1,0 +1,119 @@
+basePath: /
+definitions:
+  tieba.Tieba:
+    properties:
+      created_at:
+        type: integer
+      deleted_at:
+        type: integer
+      desc:
+        type: string
+      follower:
+        type: integer
+      id:
+        type: integer
+      img:
+        type: string
+      name:
+        type: string
+      popu:
+        type: integer
+      status:
+        type: integer
+      uid:
+        type: integer
+      updated_at:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: junmocsq@163.com
+    name: junmo
+    url: http://www.github.com/junmocsq
+  description: yizhen
+  license:
+    name: MIT
+    url: https://github.com/junmocsq/gua/blob/master/LICENSE
+  title: gua
+  version: "1.0"
+paths:
+  /v1/tieba/tiebaById:
+    get:
+      consumes:
+      - application/json
+      description: do ping
+      parameters:
+      - default: 1
+        description: 贴吧ID
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tieba.Tieba'
+      summary: 贴吧信息
+      tags:
+      - Tieba
+  /v1/tieba/tiebaByName:
+    get:
+      consumes:
+      - application/json
+      description: do ping
+      parameters:
+      - default: '"赵小凡"'
+        description: 贴吧名称
+        in: query
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/tieba.Tieba'
+      summary: 贴吧信息
+      tags:
+      - Tieba
+  /v1/tieba/tiebaList:
+    get:
+      consumes:
+      - application/json
+      description: 获取贴吧列表
+      parameters:
+      - default: 1
+        description: 分页
+        in: query
+        name: page
+        required: true
+        type: integer
+      - default: 10
+        description: 每页条数
+        in: query
+        name: size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/tieba.Tieba'
+              type: array
+            type: array
+        "400":
+          description: failed!!
+          schema:
+            type: string
+      tags:
+      - Tieba
+swagger: "2.0"

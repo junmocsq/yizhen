@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/junmocsq/yizhen/controller/v1"
+	"github.com/junmocsq/yizhen/route"
 	"log"
 	"net/http"
 	"os"
@@ -39,8 +40,33 @@ func main() {
 	// swag init 生成swagger json
 	// http://localhost:8080/swagger/index.html
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	router.Static("/assets", "./assets")
 
-	vision1(router)
+	router.GET("/local/file", func(c *gin.Context) {
+		c.File("main.go")
+	})
+
+	router.GET("/long_async", func(c *gin.Context) {
+		// create copy to be used inside the goroutine
+		cCp := c.Copy()
+		go func() {
+			// simulate a long task with time.Sleep(). 5 seconds
+			time.Sleep(5 * time.Second)
+
+			// note that you are using the copied context "cCp", IMPORTANT
+			log.Println("Done! in path " + cCp.Request.URL.Path)
+		}()
+	})
+
+	router.GET("/long_sync", func(c *gin.Context) {
+		// simulate a long task with time.Sleep(). 5 seconds
+		time.Sleep(5 * time.Second)
+
+		// since we are NOT using a goroutine, we do not have to copy the context
+		log.Println("Done! in path " + c.Request.URL.Path)
+	})
+
+	route.V1User(router)
 	// @Router /post/{ids}/accounts/{account_id} [post]
 	router.POST("/post", func(c *gin.Context) {
 		ids := c.QueryMap("ids")

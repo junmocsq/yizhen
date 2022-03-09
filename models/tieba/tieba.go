@@ -107,7 +107,7 @@ func (t *tieba) UpdateFollower(id uint32, follower uint32) int64 {
 	return n
 }
 
-func (t *tieba) IncrFollower(id uint32, follower uint32) int64 {
+func (t *tieba) IncrFollower(id uint32, follower int32) int64 {
 	db := dbcache.NewDb()
 	stmt := db.DryRun().Model(&Tieba{}).Where("id = ?", id).Omit("UpdatedAt").
 		Update("follower", gorm.Expr("follower + ?", follower)).Statement
